@@ -70,17 +70,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClassRobo.cpp" />
-    <ClCompile Include="DrawComponent.cpp" />
+    <ClCompile Include="DrawingComponents.cpp" />
+    <ClCompile Include="OpenGLComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RobotMap.cpp" />
     <ClCompile Include="Sonar.cpp" />
+	<ClCompile Include="ObjectDrawer.cpp" />
+    <ClCompile Include="RobotDrawComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassRobo.h" />
-    <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="RobotMap.h" />
     <ClInclude Include="Sonar.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="DrawingComponents.h" />
+    <ClInclude Include="OpenGLComponent.h" />
+    <ClInclude Include="ObjectDrawer.h" />
+    <ClInclude Include="RobotDrawComponent.h" />
+
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

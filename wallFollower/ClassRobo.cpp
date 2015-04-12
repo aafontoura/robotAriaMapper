@@ -5,6 +5,7 @@
 #include <string.h>
 #include "ClassRobo.h"
 #include "aria.h"  
+#include "RobotMap.h"
 
 #define REAL 0
   int PioneerRobot::isConnected()
@@ -111,7 +112,10 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
  
   int PioneerRobot::getSonar(int i)
   { 
+	  Position OwnPos = { getXPos(), getYPos() };
+	  stMap.SetCone(OwnPos, aSonares[i].GetCone());
 	  return(aSonares[i].GetMeasure()); 
+
   }
 
   void PioneerRobot::getAllSonar(int *sensores) 

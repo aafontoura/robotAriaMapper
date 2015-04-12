@@ -3,7 +3,8 @@
 
 struct Cone
 {
-	float fAlpha_deg;
+	float fViewAngle_deg;
+	float fAzimuth_deg;
 	float fRange_m;
 
 };

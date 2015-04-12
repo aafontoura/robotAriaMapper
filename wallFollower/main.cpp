@@ -313,7 +313,7 @@ void openGLThread()
 		occupationMatrixT[i] = (int*)malloc(sizeof(int)*MATRIX_X_SIZE);
 
 	DrawComponent::setOccupationMatrix((int**)occupationMatrixT);// (int**)(robot->occupationMatrix));
-
+	DrawComponent::getMapData(&robot->stMap);
 	// enter GLUT event processing cycle
 	glutMainLoop();
 }

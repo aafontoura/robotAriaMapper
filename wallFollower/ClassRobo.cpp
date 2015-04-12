@@ -13,7 +13,8 @@
 
    
 PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {	      
-     int argc=0;char** argv;
+
+	 int argc=0;char** argv;
 	 Aria::init();
 	 switch (tipoConexao) 
 	 {
@@ -108,13 +109,18 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
   void PioneerRobot::pararMovimento() {   robot.stop(); }
   void PioneerRobot::desconectar()    {  robot.stopRunning(true); }
  
-  int PioneerRobot::getSonar(int i){  return(Sensores[i]);}
-  void PioneerRobot::getAllSonar(int *sensores) 
-  { for(int i=0;i<8;i++) sensores[i]=(int)(robot.getSonarRange(i));
+  int PioneerRobot::getSonar(int i)
+  { 
+	  return(aSonares[i].GetMeasure()); 
   }
-  void PioneerRobot::readSensores() 
-  { for(int i=0;i<8;i++) Sensores[i]=(int)(robot.getSonarRange(i));
-   }
+
+  void PioneerRobot::getAllSonar(int *sensores) 
+  { 
+	  for(int i=0;i<8;i++) 
+		  aSonares[i].SetMeasure((int)(robot.getSonarRange(i)));
+  }
+
+ 
   float PioneerRobot::getXPos()     { return   (robot.getX()/10);}
   float PioneerRobot::getYPos()     { return   (robot.getY()/10);}
   float PioneerRobot::getAngBase () { return   (robot.getTh()); }   

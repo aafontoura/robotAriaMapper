@@ -32,6 +32,7 @@ positionType robotPos;
 
 int occupationMatrix[MATRIX_X_SIZE][MATRIX_Y_SIZE];
 int** testMatrix;
+CRobotMap* stRobotMap;
 
 float getX(int x)
 {
@@ -64,6 +65,11 @@ void DrawComponent::setOccupationMatrix(int** ocupationMatrixInput)
 {
 	testMatrix = ocupationMatrixInput;
 	//occupationMatrix = ocupationMatrixInput;
+}
+
+void DrawComponent::getMapData(CRobotMap* Map)
+{
+	stRobotMap = Map;
 }
 
 void DrawComponent::setRobotPos(float x, float y)

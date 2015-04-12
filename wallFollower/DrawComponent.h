@@ -25,5 +25,6 @@ public:
 	static void keyUp(unsigned char key, int x, int y);
 	static void setOccupationMatrix(int** ocupationMatrixInput);
 	static void setRobotPos(float x, float y);
+	static void getMapData(CRobotMap* stMap);
 };
 

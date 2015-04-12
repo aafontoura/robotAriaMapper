@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "aria.h"
+#include "RobotMap.h"
+#include "Sonar.h"
 
 #define GirarBase          1
 #define ConexaoSerial      1
@@ -27,19 +29,20 @@ class PioneerRobot {
   ArRobotConnector *robotConnector;
   ArArgumentParser *parser;
   ArSimpleConnector *simpleConnector;
-  ArAnalogGyro *gyro;
+  //ArAnalogGyro *gyro; //Not used
   ArSerialConnection con1;
 
-  int occupationMatrix[MATRIX_X_SIZE][MATRIX_Y_SIZE];
+  CRobotMap stMap;
 
-  int Sensores[8];
+  //int Sensores[8]; Substituido por Objeto CSonar
+  CSonar aSonares[8];
+
   PioneerRobot(int tipoConexao,char* info,int *sucesso);
   
   void destroy();     
   void desconectar();
   void pararMovimento();   
-  void readSensores();
-
+  
   int  getSonar(int i);
   int  isConnected();  
     

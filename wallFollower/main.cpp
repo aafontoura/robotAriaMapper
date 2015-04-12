@@ -8,6 +8,7 @@
 PioneerRobot* robot;
 int** occupationMatrixT;
 
+
 class later
 {
 public:

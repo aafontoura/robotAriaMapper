@@ -75,7 +75,7 @@ void OpenGLComponent::setOccupationMatrix(int** ocupationMatrixInput)
 }
 
 
-void DrawComponent::getMapData(CRobotMap* Map)
+void OpenGLComponent::setMapData(CRobotMap* Map)
 {
 	stRobotMap = Map;
 }

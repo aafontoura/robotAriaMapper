@@ -319,7 +319,7 @@ void openGLThread()
 
 	OpenGLComponent::setOccupationMatrix((int**)occupationMatrixT);// (int**)(robot->occupationMatrix));
 
-	OpenGLComponent::getMapData(&robot->stMap);
+	OpenGLComponent::setMapData(&robot->stMap);
 
 	// enter GLUT event processing cycle
 	glutMainLoop();

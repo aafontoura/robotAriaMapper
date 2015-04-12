@@ -26,7 +26,7 @@ public:
 	static void setOccupationMatrix(int** ocupationMatrixInput);
 	static void setRobotPos(float x, float y);
 
-	static void getMapData(CRobotMap* stMap);
+	static void setMapData(CRobotMap* stMap);
 
 
 	static void setDrawingComponents(DrawingComponents *dComponents);

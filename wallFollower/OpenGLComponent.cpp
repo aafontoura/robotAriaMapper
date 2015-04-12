@@ -1,4 +1,5 @@
-#include "DrawComponent.h"
+#include "OpenGLComponent.h"
+
 
 using namespace std;
 
@@ -14,7 +15,12 @@ using namespace std;
 /*						GLOBAL VARIABLES
 /*
 /* ------------------------------------------------------------------*/
+DrawingComponents *objectsComponents;
+
 float angle = 0.0f;
+
+
+
 
 /* Camera position */
 float xA = 4.0f;
@@ -52,27 +58,29 @@ int getInvPoint(float x)
 
 /* ------------------------------------------------------------------*/
 
-DrawComponent::DrawComponent()
+OpenGLComponent::OpenGLComponent()
 {
+
 }
 
 
-DrawComponent::~DrawComponent()
+OpenGLComponent::~OpenGLComponent()
 {
 }
 
-void DrawComponent::setOccupationMatrix(int** ocupationMatrixInput)
+void OpenGLComponent::setOccupationMatrix(int** ocupationMatrixInput)
 {
 	testMatrix = ocupationMatrixInput;
 	//occupationMatrix = ocupationMatrixInput;
 }
 
+
 void DrawComponent::getMapData(CRobotMap* Map)
 {
 	stRobotMap = Map;
 }
+void OpenGLComponent::setRobotPos(float x, float y)
 
-void DrawComponent::setRobotPos(float x, float y)
 {
 	robotPos.x = x / 100 + PIXEL_SIZE * 50;
 	robotPos.y = y / 100 + PIXEL_SIZE * 50;
@@ -81,6 +89,10 @@ void DrawComponent::setRobotPos(float x, float y)
 
 	testMatrix[getInvPoint(robotPos.x)][getInvPoint(robotPos.y)] = 1;
 
+	objectsComponents->getRobot()->setPosition(x, y);
+
+	
+
 
 
 
@@ -88,7 +100,7 @@ void DrawComponent::setRobotPos(float x, float y)
 
 
 
-void DrawComponent::changeSize(int w, int h) {
+void OpenGLComponent::changeSize(int w, int h) {
 
 	// Prevent a divide by zero, when window is too short
 	// (you cant make a window of zero width).
@@ -113,18 +125,18 @@ void DrawComponent::changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void DrawComponent::keyPressed(unsigned char key, int x, int y) {
+void OpenGLComponent::keyPressed(unsigned char key, int x, int y) {
 	keyStates[key] = true; // Set the state of the current key to pressed  
 }
 
 
-void DrawComponent::keyUp(unsigned char key, int x, int y) {
+void OpenGLComponent::keyUp(unsigned char key, int x, int y) {
 	keyStates[key] = false; // Set the state of the current key to not pressed  
 }
 
 
 /* Handles keys press */
-void DrawComponent::processSpecialKeys(int key, int x, int y) {
+void OpenGLComponent::processSpecialKeys(int key, int x, int y) {
 
 	switch (key) {
 	case GLUT_KEY_UP:
@@ -197,7 +209,7 @@ void processKeys()
 
 
 
-void DrawComponent::mouseButtonHandler(int button, int state, int x, int y)
+void OpenGLComponent::mouseButtonHandler(int button, int state, int x, int y)
 {
 	//std::cout << "button - " << x << " - " << y << " - " << button << " - " << state << std::endl;
 	switch (button)
@@ -238,7 +250,7 @@ void DrawComponent::mouseButtonHandler(int button, int state, int x, int y)
 	}
 }
 
-void DrawComponent::mouseMotionHandler(int x, int y)
+void OpenGLComponent::mouseMotionHandler(int x, int y)
 {
 	//std::cout << "motion - " << x << " - " << y << std::endl;
 	if (bMooveMap)
@@ -344,7 +356,7 @@ void drawRobot()
 }
 
 
-void DrawComponent::renderScene() {
+void OpenGLComponent::renderScene() {
 	
 
 
@@ -372,11 +384,20 @@ void DrawComponent::renderScene() {
 
 
 
-	drawOccupationMatrix();
-	drawRobot();
+	//drawOccupationMatrix();
+	//drawRobot();
+	objectsComponents->drawObjects();
 
 	glutSwapBuffers();
 
 
 
 }
+
+
+
+void OpenGLComponent::setDrawingComponents(DrawingComponents *dComponents)
+{
+	objectsComponents = dComponents;
+}
+

@@ -1,12 +1,13 @@
 #include <string>
 #include "Aria.h"
-#include "DrawComponent.h"
+#include "OpenGLComponent.h"
 #include "ClassRobo.h"
 #include <iostream>       // std::cout
 #include <thread>         // std::thread
 
 PioneerRobot* robot;
 int** occupationMatrixT;
+DrawingComponents* dComponents;
 
 
 class later
@@ -240,7 +241,7 @@ void handleSensors()
 	else
 		robot->Move(-50, 50);*/
 	
-	DrawComponent::setRobotPos(robot->getXPos(), robot->getYPos());
+	OpenGLComponent::setRobotPos(robot->getXPos(), robot->getYPos());
 	std::cout << robot->getXPos()<<"-" << robot->getYPos() <<  std::endl;
 
 	memcpy(sOld, s, sizeof(int) * 8);
@@ -290,6 +291,7 @@ void openGLThread()
 {
 	int argc;
 	char** argv = NULL;
+
 	// init GLUT and create window
 	glutInit(&argc, (char**)argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -298,22 +300,25 @@ void openGLThread()
 	glutCreateWindow("Robot Grid");
 
 	// register callbacks
-	glutDisplayFunc(DrawComponent::renderScene);
+	glutDisplayFunc(OpenGLComponent::renderScene);
 
-	glutReshapeFunc(DrawComponent::changeSize);
-	glutIdleFunc(DrawComponent::renderScene);
-	glutSpecialFunc(DrawComponent::processSpecialKeys);
-	glutMotionFunc(DrawComponent::mouseMotionHandler);
-	glutMouseFunc(DrawComponent::mouseButtonHandler);
-	glutKeyboardFunc(DrawComponent::keyPressed); // Tell GLUT to use the method "keyPressed" for key presses  
-	glutKeyboardUpFunc(DrawComponent::keyUp); // Tell GLUT to use the method "keyUp" for key up events
+	glutReshapeFunc(OpenGLComponent::changeSize);
+	glutIdleFunc(OpenGLComponent::renderScene);
+	glutSpecialFunc(OpenGLComponent::processSpecialKeys);
+	glutMotionFunc(OpenGLComponent::mouseMotionHandler);
+	glutMouseFunc(OpenGLComponent::mouseButtonHandler);
+	glutKeyboardFunc(OpenGLComponent::keyPressed); // Tell GLUT to use the method "keyPressed" for key presses  
+	glutKeyboardUpFunc(OpenGLComponent::keyUp); // Tell GLUT to use the method "keyUp" for key up events
 
 	occupationMatrixT = (int**)malloc(sizeof(int)*MATRIX_X_SIZE);
 	for (int i = 0; i < MATRIX_X_SIZE;i++)
 		occupationMatrixT[i] = (int*)malloc(sizeof(int)*MATRIX_X_SIZE);
 
-	DrawComponent::setOccupationMatrix((int**)occupationMatrixT);// (int**)(robot->occupationMatrix));
-	DrawComponent::getMapData(&robot->stMap);
+	dComponents = new DrawingComponents();
+	OpenGLComponent::setDrawingComponents(dComponents);// (int**)(robot->occupationMatrix));
+
+	OpenGLComponent::setOccupationMatrix((int**)occupationMatrixT);// (int**)(robot->occupationMatrix));
+
 	// enter GLUT event processing cycle
 	glutMainLoop();
 }

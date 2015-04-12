@@ -2,20 +2,20 @@
 #include <GL/glut.h>
 #include <vector>
 #include "ClassRobo.h"
+#include "RobotDrawComponent.h"
+#include "ObjectDrawer.h"
+#include "DrawingComponents.h"
 
 #define WINDOW_SIZE_WIDTH 1024
 #define WINDOW_SIZE_HEIGHT 1024
 
-typedef struct {
-	float x;
-	float y;
-} positionType;
 
-class DrawComponent
+
+class OpenGLComponent
 {
 public:
-	DrawComponent();
-	~DrawComponent();
+	OpenGLComponent();
+	~OpenGLComponent();
 	static void renderScene();
 	static void changeSize(int w, int h);
 	static void processSpecialKeys(int key, int x, int y);
@@ -25,6 +25,12 @@ public:
 	static void keyUp(unsigned char key, int x, int y);
 	static void setOccupationMatrix(int** ocupationMatrixInput);
 	static void setRobotPos(float x, float y);
+
 	static void getMapData(CRobotMap* stMap);
+
+
+	static void setDrawingComponents(DrawingComponents *dComponents);
+
+
 };
 

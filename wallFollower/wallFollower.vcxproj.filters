@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\drawComp">
+      <UniqueIdentifier>{a84be6dd-869d-4d08-8d20-341f234da881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\drawComp">
+      <UniqueIdentifier>{b0a76b4b-1e82-4ebc-91d4-a368138d5f22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,7 +27,16 @@
     <ClCompile Include="ClassRobo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DrawComponent.cpp">
+    <ClCompile Include="ObjectDrawer.cpp">
+      <Filter>Source Files\drawComp</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGLComponent.cpp">
+      <Filter>Source Files\drawComp</Filter>
+    </ClCompile>
+    <ClCompile Include="RobotDrawComponent.cpp">
+      <Filter>Source Files\drawComp</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawingComponents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sonar.cpp">
@@ -35,7 +50,16 @@
     <ClInclude Include="ClassRobo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DrawComponent.h">
+    <ClInclude Include="ObjectDrawer.h">
+      <Filter>Header Files\drawComp</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLComponent.h">
+      <Filter>Header Files\drawComp</Filter>
+    </ClInclude>
+    <ClInclude Include="RobotDrawComponent.h">
+      <Filter>Header Files\drawComp</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingComponents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sonar.h">

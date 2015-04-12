@@ -2,6 +2,7 @@
 #include "Types.h" 
 
 
+
 class CSonar
 {
 private:

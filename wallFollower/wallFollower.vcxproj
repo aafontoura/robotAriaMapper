@@ -72,10 +72,15 @@
     <ClCompile Include="ClassRobo.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RobotMap.cpp" />
+    <ClCompile Include="Sonar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassRobo.h" />
     <ClInclude Include="DrawComponent.h" />
+    <ClInclude Include="RobotMap.h" />
+    <ClInclude Include="Sonar.h" />
+    <ClInclude Include="Types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

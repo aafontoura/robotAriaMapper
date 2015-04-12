@@ -27,4 +27,11 @@ struct Distance
 	float fError;
 };
 
+struct Index
+{
+	int iX;
+	int iY;
+};
+
+
 #endif

@@ -120,7 +120,7 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
 
   void PioneerRobot::getAllSonar() 
   { 
-	  Position OwnPos = { getXPos() + 25, getYPos() + 25 };
+	  Position OwnPos = { getXPos() / 100 , getYPos() / 100 };
 	  for (int i = 0; i < 8; i++)
 	  {
 		stMap.SetCone(OwnPos, aSonares[i].GetCone());

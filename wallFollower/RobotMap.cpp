@@ -49,11 +49,11 @@ bool CRobotMap::SetCone(Position stPos, Cone stCone)
 			float CO = tempPosition.fX_m - stPos.fX_m;
 			float CA = tempPosition.fY_m - stPos.fY_m;
 			float H = sqrt((CO * CO) + (CA * CA));
-			float RelativeAngle = (atan(CO / CA) * 360) / 2 * 3.1415; //TODO fix constants
+			float RelativeAngle = (atan2(CO , CA) * 360) / (2 * 3.1415); //TODO fix constants
 
 			if (RelativeAngle > (stCone.fAzimuth_deg - stCone.fViewAngle_deg / 2) &&
-				RelativeAngle < (stCone.fAzimuth_deg + stCone.fViewAngle_deg / 2) &&
-				(H < stCone.fRange_m))
+				RelativeAngle < (stCone.fAzimuth_deg + stCone.fViewAngle_deg / 2)) /*&&
+				(H < stCone.fRange_m))*/
 			{
 				Map[x][y].bSonarViewed = true;
 			}

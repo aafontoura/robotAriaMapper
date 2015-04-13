@@ -20,7 +20,7 @@ void ObjectDrawer::renderBitmapString(float x, float y, float z, char *string) {
 	}
 }
 
-void ObjectDrawer::drawRectangle(float left, float right, float up, float down, bool filled = 0)
+void ObjectDrawer::drawRectangle(float left, float right, float up, float down, bool filled)
 {
 	glBegin(GL_QUADS);
 	glVertex3f(left, down, 0);

@@ -173,8 +173,10 @@ void handleSensors()
 	static int state = 0;
 	robot->getAllSonar();
 
+
 	for (int i = 0; i < 8; i++)
 	{
+		s[i] = robot->aSonares[i].GetMeasure();
 		diff2[i] = diff[i] - (s[i] - sOld[i]);
 		diff[i] = s[i] - sOld[i];
 	}

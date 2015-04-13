@@ -1,6 +1,10 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#define MATRIX_X_SIZE	100
+#define MATRIX_Y_SIZE	100
+#define SIZE_CELL_M 0.5
+
 struct Cone
 {
 	float fViewAngle_deg;

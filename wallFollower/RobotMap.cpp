@@ -22,7 +22,7 @@ bool CRobotMap::SetCellWalked(Position stPos, bool bWalked)
 		return false;
 }
 
-bool CRobotMap::SetCone(Position stPos, Cone stCone)
+bool CRobotMap::SetCone(Position stPos, float fRobotAngle, Cone stCone)
 {
 	Position fMinPos, fMaxPos;
 	Index iMinIndex, iMaxIndex;
@@ -50,9 +50,10 @@ bool CRobotMap::SetCone(Position stPos, Cone stCone)
 			float CA = tempPosition.fY_m - stPos.fY_m;
 			float H = sqrt((CO * CO) + (CA * CA));
 			float RelativeAngle = (atan(CO / CA) * 360) / 2 * 3.1415; //TODO fix constants
+			float fBeamAngle_deg = (fRobotAngle + stCone.fAzimuth_deg);
 
-			if (RelativeAngle > (stCone.fAzimuth_deg - stCone.fViewAngle_deg / 2) &&
-				RelativeAngle < (stCone.fAzimuth_deg + stCone.fViewAngle_deg / 2) &&
+			if (RelativeAngle > (fBeamAngle_deg - stCone.fViewAngle_deg / 2) &&
+				RelativeAngle < (fBeamAngle_deg + stCone.fViewAngle_deg / 2) &&
 				(H < stCone.fRange_m))
 			{
 				Map[x][y].bSonarViewed = true;

@@ -2,9 +2,11 @@
 #include <vector>
 #include "ObjectDrawer.h"
 #include "RobotDrawComponent.h"
+#include "OccupationMDrawComponent.h"
 
 enum {
-	ROBOT_COMPONENT
+	ROBOT_COMPONENT,
+	OCCUPATION_M_COMPONENT
 };
 
 class DrawingComponents
@@ -16,6 +18,7 @@ public:
 	void drawObjects();
 
 	RobotDrawComponent *getRobot();
+	OccupationMDrawComponent *getOccupationMatrix();
 
 
 private:

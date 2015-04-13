@@ -77,7 +77,8 @@ void OpenGLComponent::setOccupationMatrix(int** ocupationMatrixInput)
 
 void OpenGLComponent::setMapData(CRobotMap* Map)
 {
-	stRobotMap = Map;
+	objectsComponents->getOccupationMatrix()->setRobotMap(Map);
+	//stRobotMap = Map;
 }
 void OpenGLComponent::setRobotPos(float x, float y)
 

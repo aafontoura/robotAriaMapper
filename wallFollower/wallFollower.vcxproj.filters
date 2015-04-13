@@ -45,6 +45,9 @@
     <ClCompile Include="RobotMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OccupationMDrawComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassRobo.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RobotMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OccupationMDrawComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

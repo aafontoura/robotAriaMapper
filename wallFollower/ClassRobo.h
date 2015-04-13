@@ -52,7 +52,7 @@ class PioneerRobot {
            
   void initMov();
   void Rotaciona(double degrees,int Sentido);
-  void getAllSonar(int *sensores);  
+  void getAllSonar();  
   void Move(double vl,double vr);
   void getLaser();
 };

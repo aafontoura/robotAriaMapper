@@ -171,7 +171,7 @@ void handleSensors()
 	static int count = 0;
 	
 	static int state = 0;
-	robot->getAllSonar(s);
+	robot->getAllSonar();
 
 	for (int i = 0; i < 8; i++)
 	{

@@ -319,7 +319,6 @@ void openGLThread()
 	dComponents = new DrawingComponents();
 	OpenGLComponent::setDrawingComponents(dComponents);// (int**)(robot->occupationMatrix));
 
-	OpenGLComponent::setOccupationMatrix((int**)occupationMatrixT);// (int**)(robot->occupationMatrix));
 
 	OpenGLComponent::setMapData(&robot->stMap);
 

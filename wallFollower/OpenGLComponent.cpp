@@ -34,11 +34,6 @@ int yOrigin = -1;
 bool bMooveMap = false;
 
 
-positionType robotPos;
-
-int occupationMatrix[MATRIX_X_SIZE][MATRIX_Y_SIZE];
-int** testMatrix;
-CRobotMap* stRobotMap;
 
 float getX(int x)
 {
@@ -68,35 +63,14 @@ OpenGLComponent::~OpenGLComponent()
 {
 }
 
-void OpenGLComponent::setOccupationMatrix(int** ocupationMatrixInput)
-{
-	testMatrix = ocupationMatrixInput;
-	//occupationMatrix = ocupationMatrixInput;
-}
-
 
 void OpenGLComponent::setMapData(CRobotMap* Map)
 {
 	objectsComponents->getOccupationMatrix()->setRobotMap(Map);
-	//stRobotMap = Map;
 }
 void OpenGLComponent::setRobotPos(float x, float y)
-
 {
-	robotPos.x = x / 100 + PIXEL_SIZE * 50;
-	robotPos.y = y / 100 + PIXEL_SIZE * 50;
-
-
-
-	testMatrix[getInvPoint(robotPos.x)][getInvPoint(robotPos.y)] = 1;
-
 	objectsComponents->getRobot()->setPosition(x, y);
-
-	
-
-
-
-
 }
 
 
@@ -264,99 +238,6 @@ void OpenGLComponent::mouseMotionHandler(int x, int y)
 }
 
 
-/* Draw Strings */
-void renderBitmapString(float x, float y, float z, char *string) {
-
-	char *c;
-	glRasterPos3f(x, y, z);
-	for (c = string; *c != '\0'; c++) {
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_10, *c);
-	}
-}
-
-void drawRectangle(float left, float right, float up, float down, bool filled = 0)
-{
-	glBegin(GL_QUADS);
-	glVertex3f(left, down, 0);
-	glVertex3f(left, up, 0);
-	glVertex3f(right, up, 0);
-	glVertex3f(right, down, 0);
-	glEnd();
-}
-
-void drawSquare(float x, float y, float sideSize)
-{
-	drawRectangle(x - sideSize / 2, x + sideSize / 2, y + sideSize / 2, y - sideSize / 2);
-}
-
-void drawLine(float p1X, float p1Y, float p2X, float p2Y, float width = 1.0)
-{
-	glBegin(GL_LINES);
-	glVertex3f(p1X, p1Y, 0);
-	glVertex3f(p2X, p2Y, 0);
-	glEnd();
-}
-
-
-
-/* Draw a circle centered in cx,cy with radius r. */
-/* The circunference is drawed using line segments. the number
-/* of segments used for drawing the circle is num_segments. */
-void drawCircle(float cx, float cy, float r, int num_segments)
-{
-	float theta = 2 * 3.1415926 / float(num_segments);
-	float c = cosf(theta);//precalculate the sine and cosine
-	float s = sinf(theta);
-	float t;
-
-	float x = r;//we start at angle = 0 
-	float y = 0;
-
-	glBegin(GL_LINE_LOOP);
-	for (int ii = 0; ii < num_segments; ii++)
-	{
-		glVertex2f(x + cx, y + cy);//output vertex 
-
-		//apply the rotation matrix
-		t = x;
-		x = c * x - s * y;
-		y = s * t + c * y;
-	}
-	glEnd();
-}
-
-
-
-
-
-void drawOccupationMatrix()
-{
-
-	for (int i = 0; i < MATRIX_X_SIZE; i++)
-		for (int j = 0; j< MATRIX_Y_SIZE; j++)
-		{
-
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			if (testMatrix[i][j] == 1)
-			{
-				glColor4f(1.0, 1.0, 1.0, 0.8f);
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			}
-			else
-				glColor4f(1.0 , 1.0 , 1.0 , 0.8f);
-
-			drawRectangle(getPoint(i) - PIXEL_SIZE / 2, getPoint(i) + PIXEL_SIZE / 2, getPoint(j) + PIXEL_SIZE / 2, getPoint(j) - PIXEL_SIZE / 2);
-			
-		}
-}
-
-void drawRobot()
-{
-	glColor4f(1.0, 0.0, 0.0, 0.8f);
-	drawCircle(robotPos.x, robotPos.y, PIXEL_SIZE / 5, 10);
-}
-
-
 void OpenGLComponent::renderScene() {
 	
 
@@ -375,18 +256,14 @@ void OpenGLComponent::renderScene() {
 		);
 
 
-
 	glRotatef(angle, 0.0f, 1.0f, 0.0f);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 
 	/* Handles keys pressed */
-	//processKeys();
+	processKeys();
 
 
-
-	//drawOccupationMatrix();
-	//drawRobot();
 	objectsComponents->drawObjects();
 
 	glutSwapBuffers();

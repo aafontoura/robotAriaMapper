@@ -14,7 +14,8 @@ OccupationMDrawComponent::~OccupationMDrawComponent()
 void OccupationMDrawComponent::drawObject()
 {
 	glColor4f(1.0, 1.0, 1.0, 0.8f);
-	drawLine(0, 0, 500, 500,1.0);
+	drawLine(-500, 0, 500, 0,1.0);
+	drawLine(0, -500, 0, 500, 1.0);
 
 
 	for (int i = 0; i < MATRIX_X_SIZE; i++)
@@ -28,11 +29,12 @@ void OccupationMDrawComponent::drawObject()
 			{
 				glColor4f(1.0, 1.0, 1.0, 0.8f);
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				drawRectangle(getXDisplay(posXY.fX_m) - SIZE_CELL_M / 2 - MATRIX_X_SIZE*SIZE_CELL_M / 2, getXDisplay(posXY.fX_m) + SIZE_CELL_M / 2 - MATRIX_X_SIZE*SIZE_CELL_M / 2, getYDisplay(posXY.fY_m) + SIZE_CELL_M / 2 - MATRIX_Y_SIZE*SIZE_CELL_M / 2, getYDisplay(posXY.fY_m) - SIZE_CELL_M / 2 - MATRIX_Y_SIZE*SIZE_CELL_M / 2);
 			}
 			else
 				glColor4f(1.0, 1.0, 1.0, 0.8f);
 
-			drawRectangle(getXDisplay(posXY.fX_m) - SIZE_CELL_M / 2, getXDisplay(posXY.fX_m) + SIZE_CELL_M / 2, getYDisplay(posXY.fY_m) + SIZE_CELL_M / 2, getYDisplay(posXY.fY_m) - SIZE_CELL_M / 2);
+			
 
 		}
 

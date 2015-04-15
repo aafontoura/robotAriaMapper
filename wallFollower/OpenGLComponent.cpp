@@ -74,8 +74,6 @@ void OpenGLComponent::setRobotPos(float x, float y, float angle)
 	objectsComponents->getRobot()->setAngle(angle);
 }
 
-
-
 void OpenGLComponent::changeSize(int w, int h) {
 
 	// Prevent a divide by zero, when window is too short

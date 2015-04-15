@@ -13,8 +13,9 @@ DrawingComponents::~DrawingComponents()
 
 void DrawingComponents::drawObjects()
 {
-	drawingList[0]->drawObject();
+
 	drawingList[1]->drawObject();
+	drawingList[0]->drawObject();
 }
 
 

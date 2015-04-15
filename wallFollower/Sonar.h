@@ -12,7 +12,9 @@ private:
 	Cone SonarCone;
 	Distance stMeasure;
 public:
+	
 	CSonar();
+	CSonar(float alfa, float bearing, float range);
 	~CSonar();
 
 

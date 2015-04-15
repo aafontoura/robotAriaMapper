@@ -15,6 +15,8 @@
 #define ConexaoRadio       2
 #define ConexaoSimulacao   3
 
+#define NUM_OF_SONARS	8
+
 class PioneerRobot {  
   public:
   ArRobot robot;
@@ -31,7 +33,7 @@ class PioneerRobot {
   CRobotMap stMap;
 
   //int Sensores[8]; Substituido por Objeto CSonar
-  CSonar aSonares[8];
+  CSonar* aSonares[NUM_OF_SONARS];
 
   PioneerRobot(int tipoConexao,char* info,int *sucesso);
   

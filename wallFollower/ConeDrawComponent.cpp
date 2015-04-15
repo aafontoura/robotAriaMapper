@@ -20,9 +20,7 @@ void ConeDrawComponent::drawObject()
 {
 	glColor4f(0.0, 0.0, 0.5, 0.4f);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);	
-	//glTranslatef(getXDisplay(x), getYDisplay(y), 0.0f);
 	gluPartialDisk(gluNewQuadric(), 0, getXDisplay(distance), 100, 10, bearing + 90 - alfa/2, alfa);
-	//glTranslatef(-getXDisplay(x), -getYDisplay(y), 0.0f);
 }
 
 
@@ -49,4 +47,14 @@ void ConeDrawComponent::setDistance(float distanceIn)
 
 	distance = distanceIn;
 
+}
+
+void ConeDrawComponent::setAlfa(float alfaIn)
+{
+	alfa = alfaIn;
+}
+
+void ConeDrawComponent::setRange(float rangeIn)
+{
+	range = rangeIn;
 }

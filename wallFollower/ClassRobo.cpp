@@ -99,6 +99,10 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
 			{ printf("Could not connect to lasers... exiting\n");
               Aria::exit(2);
             }
+
+			/* initialize sonars data attributes*/
+			for (int i = 0; i < NUM_OF_SONARS; i++)
+				aSonares[i] = new CSonar(30, i * 180 / 7 - 15 - 75, 5);
 	
   
 		}
@@ -113,8 +117,8 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
   int PioneerRobot::getSonar(int i)
   { 
 	 // Position OwnPos = { getXPos(), getYPos() };
-	  //stMap.SetCone(OwnPos, 0, aSonares[i].GetCone());
-	  return(aSonares[i].GetMeasure()); 
+	  //stMap.SetCone(OwnPos, 0, aSonares[i]->GetCone());
+	  return(aSonares[i]->GetMeasure()); 
 
   }
 
@@ -123,8 +127,9 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
 	  Position OwnPos = { getXPos() / 100 , getYPos() / 100 };
 	  for (int i = 0; i < 8; i++)
 	  {
-		  stMap.SetCone(OwnPos, getAngBase(), aSonares[i].GetCone());
-		aSonares[i].SetMeasure((int)(robot.getSonarRange(i)));
+
+		  aSonares[i]->SetMeasure((int)(robot.getSonarRange(i)));
+		  stMap.SetCone(OwnPos, getAngBase(), aSonares[i]->GetCone(), aSonares[i]->GetMeasure()/1000);
 	  }
   }
 

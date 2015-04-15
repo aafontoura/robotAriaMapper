@@ -176,7 +176,7 @@ void handleSensors()
 
 	for (int i = 0; i < 8; i++)
 	{
-		s[i] = robot->aSonares[i].GetMeasure();
+		s[i] = robot->aSonares[i]->GetMeasure();
 		diff2[i] = diff[i] - (s[i] - sOld[i]);
 		diff[i] = s[i] - sOld[i];
 	}
@@ -238,12 +238,21 @@ void handleSensors()
 	else if (getFrontDist(s) > 1000)
 	{*/
 
-	
+	robot->Move(0, 0);
 	/*}
 	else
 		robot->Move(-50, 50);*/
 	
-	OpenGLComponent::setRobotPos(robot->getXPos(), robot->getYPos(), robot->getAngBase());
+	//OpenGLComponent::setRobotPos(robot->getXPos(), robot->getYPos(), robot->getAngBase());
+	dComponents->getRobot()->setPosition(robot->getXPos(), robot->getYPos());
+	dComponents->getRobot()->setAngle(robot->getAngBase());
+
+	for (int i = 0; i < 8; i++)
+	{
+		dComponents->getRobot()->setConeDistance(robot->aSonares[i]->GetMeasure()/1000,i);
+	}
+
+
 	std::cout << robot->getXPos()<<"-" << robot->getYPos() <<  std::endl;
 
 	memcpy(sOld, s, sizeof(int) * 8);
@@ -317,6 +326,12 @@ void openGLThread()
 		occupationMatrixT[i] = (int*)malloc(sizeof(int)*MATRIX_X_SIZE);
 
 	dComponents = new DrawingComponents();
+
+	for (int i = 0; i < 8; i++)
+	{
+		dComponents->getRobot()->initializeCone(robot->aSonares[i]->GetCone(), i);
+	}
+
 	OpenGLComponent::setDrawingComponents(dComponents);// (int**)(robot->occupationMatrix));
 
 

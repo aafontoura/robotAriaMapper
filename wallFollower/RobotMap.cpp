@@ -49,8 +49,8 @@ bool CRobotMap::SetCone(Position stPos, float fRobotAngle, Cone stCone)
 			float CO = tempPosition.fX_m - stPos.fX_m;
 			float CA = tempPosition.fY_m - stPos.fY_m;
 			float H = sqrt((CO * CO) + (CA * CA));
-			float RelativeAngle = (atan(CO / CA) * 360) / 2 * 3.1415; //TODO fix constants
-			float fBeamAngle_deg = (fRobotAngle + stCone.fAzimuth_deg);
+			float RelativeAngle = (atan2(CA,CO) * 180 / 3.1415); //TODO fix constants
+			float fBeamAngle_deg = (((int)(fRobotAngle)%360) + stCone.fAzimuth_deg);
 
 			if (RelativeAngle > (fBeamAngle_deg - stCone.fViewAngle_deg / 2) &&
 				RelativeAngle < (fBeamAngle_deg + stCone.fViewAngle_deg / 2) &&
@@ -67,10 +67,10 @@ bool CRobotMap::SetCone(Position stPos, float fRobotAngle, Cone stCone)
 Index CRobotMap::PositionToIndex(Position stPosition)
 {
 	Index Result;
-	Result.iX = -1;
-	Result.iY = -1;
-	int tempX = floor((int)stPosition.fX_m / SIZE_CELL_M);
-	int tempY = floor((int)stPosition.fX_m / SIZE_CELL_M);
+	Result.iX = -999999;
+	Result.iY = -999999;
+	int tempX = (MATRIX_Y_SIZE/2)+floor((int)stPosition.fX_m / SIZE_CELL_M);
+	int tempY = (MATRIX_Y_SIZE/2)+floor((int)stPosition.fX_m / SIZE_CELL_M);
 
 	if ((tempX < MATRIX_X_SIZE) || (tempY< MATRIX_Y_SIZE))
 	{
@@ -83,8 +83,8 @@ Index CRobotMap::PositionToIndex(Position stPosition)
 Position CRobotMap::IndexToPosition(Index stIndex)
 {
 	Position Result;
-	Result.fX_m = (float)(stIndex.iX * SIZE_CELL_M) - SIZE_CELL_M/2;
-	Result.fY_m = (float)(stIndex.iY * SIZE_CELL_M) - SIZE_CELL_M/2;
+	Result.fX_m = (float)((stIndex.iX - (MATRIX_Y_SIZE / 2)) * SIZE_CELL_M) - SIZE_CELL_M / 2;
+	Result.fY_m = (float)((stIndex.iY - (MATRIX_Y_SIZE / 2)) * SIZE_CELL_M) - SIZE_CELL_M / 2;
 	return Result;
 }
 

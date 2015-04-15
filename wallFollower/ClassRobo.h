@@ -15,10 +15,6 @@
 #define ConexaoRadio       2
 #define ConexaoSimulacao   3
 
-#define MATRIX_X_SIZE	100
-#define MATRIX_Y_SIZE	100
-
-
 class PioneerRobot {  
   public:
   ArRobot robot;

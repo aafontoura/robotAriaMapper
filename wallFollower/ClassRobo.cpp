@@ -112,8 +112,8 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
  
   int PioneerRobot::getSonar(int i)
   { 
-	  Position OwnPos = { getXPos(), getYPos() };
-	  stMap.SetCone(OwnPos, 0, aSonares[i].GetCone());
+	 // Position OwnPos = { getXPos(), getYPos() };
+	  //stMap.SetCone(OwnPos, 0, aSonares[i].GetCone());
 	  return(aSonares[i].GetMeasure()); 
 
   }
@@ -123,7 +123,7 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
 	  Position OwnPos = { getXPos() / 100 , getYPos() / 100 };
 	  for (int i = 0; i < 8; i++)
 	  {
-		stMap.SetCone(OwnPos, 0, aSonares[i].GetCone());
+		  stMap.SetCone(OwnPos, getAngBase(), aSonares[i].GetCone());
 		aSonares[i].SetMeasure((int)(robot.getSonarRange(i)));
 	  }
   }

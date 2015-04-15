@@ -70,6 +70,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClassRobo.cpp" />
+    <ClCompile Include="ConeDrawComponent.cpp" />
     <ClCompile Include="DrawingComponents.cpp" />
     <ClCompile Include="OccupationMDrawComponent.cpp" />
     <ClCompile Include="OpenGLComponent.cpp" />
@@ -81,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassRobo.h" />
+    <ClInclude Include="ConeDrawComponent.h" />
     <ClInclude Include="OccupationMDrawComponent.h" />
     <ClInclude Include="RobotMap.h" />
     <ClInclude Include="Sonar.h" />

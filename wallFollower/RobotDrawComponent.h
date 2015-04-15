@@ -1,5 +1,8 @@
 #pragma once
 #include "ObjectDrawer.h"
+#include "ConeDrawComponent.h"
+
+#define NUM_OF_CONES 8
 
 typedef struct {
 	float x;
@@ -16,11 +19,14 @@ public:
 	~RobotDrawComponent();
 
 	void setPosition(float x, float y);
+	void setAngle(float azAngle);
 	
-
-
+	ConeDrawComponent* cones[NUM_OF_CONES];
+	
 private:
+	float orientationAngle;
 	positionType rPos;
+	
 };
 
 

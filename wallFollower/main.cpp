@@ -243,7 +243,7 @@ void handleSensors()
 	else
 		robot->Move(-50, 50);*/
 	
-	OpenGLComponent::setRobotPos(robot->getXPos(), robot->getYPos());
+	OpenGLComponent::setRobotPos(robot->getXPos(), robot->getYPos(), robot->getAngBase());
 	std::cout << robot->getXPos()<<"-" << robot->getYPos() <<  std::endl;
 
 	memcpy(sOld, s, sizeof(int) * 8);

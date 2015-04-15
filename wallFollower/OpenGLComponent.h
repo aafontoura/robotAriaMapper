@@ -24,7 +24,7 @@ public:
 	static void keyPressed(unsigned char key, int x, int y);
 	static void keyUp(unsigned char key, int x, int y);
 	static void setOccupationMatrix(int** ocupationMatrixInput);
-	static void setRobotPos(float x, float y);
+	static void setRobotPos(float x, float y, float angle);
 
 	static void setMapData(CRobotMap* stMap);
 

@@ -68,9 +68,10 @@ void OpenGLComponent::setMapData(CRobotMap* Map)
 {
 	objectsComponents->getOccupationMatrix()->setRobotMap(Map);
 }
-void OpenGLComponent::setRobotPos(float x, float y)
+void OpenGLComponent::setRobotPos(float x, float y, float angle)
 {
 	objectsComponents->getRobot()->setPosition(x, y);
+	objectsComponents->getRobot()->setAngle(angle);
 }
 
 
@@ -242,9 +243,11 @@ void OpenGLComponent::renderScene() {
 	
 
 
-	glViewport(0, 0, 1024, 768);
+	glViewport(0, 0, 1024, 1024);
 	// Clear Color and Depth Buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 
 	// Reset transformations
 	glLoadIdentity();
@@ -265,6 +268,9 @@ void OpenGLComponent::renderScene() {
 
 
 	objectsComponents->drawObjects();
+
+	
+
 
 	glutSwapBuffers();
 

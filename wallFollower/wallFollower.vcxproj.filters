@@ -36,16 +36,19 @@
     <ClCompile Include="RobotDrawComponent.cpp">
       <Filter>Source Files\drawComp</Filter>
     </ClCompile>
-    <ClCompile Include="DrawingComponents.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sonar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RobotMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DrawingComponents.cpp">
+      <Filter>Source Files\drawComp</Filter>
+    </ClCompile>
     <ClCompile Include="OccupationMDrawComponent.cpp">
+      <Filter>Source Files\drawComp</Filter>
+    </ClCompile>
+    <ClCompile Include="ConeDrawComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,9 +65,6 @@
     <ClInclude Include="RobotDrawComponent.h">
       <Filter>Header Files\drawComp</Filter>
     </ClInclude>
-    <ClInclude Include="DrawingComponents.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sonar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -75,6 +75,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OccupationMDrawComponent.h">
+      <Filter>Header Files\drawComp</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingComponents.h">
+      <Filter>Header Files\drawComp</Filter>
+    </ClInclude>
+    <ClInclude Include="ConeDrawComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

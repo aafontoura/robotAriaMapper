@@ -238,7 +238,7 @@ void handleSensors()
 	else if (getFrontDist(s) > 1000)
 	{*/
 
-	robot->Move(0, 0);
+	//robot->Move(0, 0);
 	/*}
 	else
 		robot->Move(-50, 50);*/

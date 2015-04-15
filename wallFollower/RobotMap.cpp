@@ -56,7 +56,7 @@ bool CRobotMap::SetCone(Position stPos, float fRobotAngle, Cone stCone, int dist
 			float CO = tempPosition.fX_m - stPos.fX_m;
 			float CA = tempPosition.fY_m - stPos.fY_m;
 			float H = sqrt((CO * CO) + (CA * CA));
-			float RelativeAngle = (atan2(CA,CO) * 180 / 3.1415); //TODO fix constants
+			float RelativeAngle = -(atan2(CA,CO) * 180 / 3.1415); //TODO fix constants
 			float fBeamAngle_deg = (((int)(fRobotAngle) % 360) + fRobotAngle - ((float)((int)fRobotAngle)) + stCone.fAzimuth_deg); /* precisao corrigida*/
 
 			if (RelativeAngle > (fBeamAngle_deg - stCone.fViewAngle_deg / 2) &&

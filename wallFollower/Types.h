@@ -1,9 +1,9 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#define MATRIX_X_SIZE	500
-#define MATRIX_Y_SIZE	500
-#define SIZE_CELL_M 0.1
+#define MATRIX_X_SIZE	1000
+#define MATRIX_Y_SIZE	1000
+#define SIZE_CELL_M 0.05
 
 struct Cone
 {

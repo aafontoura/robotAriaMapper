@@ -3,6 +3,7 @@
 
 CRobotMap::CRobotMap()
 {
+	cellSize_m = (float) SIZE_CELL_M;
 }
 
 
@@ -94,6 +95,11 @@ Position CRobotMap::IndexToPosition(Index stIndex)
 	Result.fX_m = (float)((stIndex.iX - (MATRIX_X_SIZE / 2)) * SIZE_CELL_M) - SIZE_CELL_M / 2;
 	Result.fY_m = (float)((stIndex.iY - (MATRIX_Y_SIZE / 2)) * SIZE_CELL_M) - SIZE_CELL_M / 2;
 	return Result;
+}
+
+bool isInsideSector(Position origin, float R1, float R2, float ang1_deg, float ang2_deg, Position testpoint)
+{
+	return false;
 }
 
 

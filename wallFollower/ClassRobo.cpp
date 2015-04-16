@@ -182,3 +182,53 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
   void PioneerRobot::Move(double vl,double vr)    
   { robot.setVel2(vl,vr);}
  
+
+  void PioneerRobot::ProcessSonarReading(CSonar sonar)
+  {
+		Index stSweepSqStart_id, stSweepSqStop_id;
+		Position stSweepSqStart_m, stSweepSqStop_m;
+		Position GridOrigin;
+		Position cellCenter;
+		int i, j;
+		Index ij;
+
+		stSweepSqStart_m.fX_m = getXPos() - (sonar.Range_m + stMap.cellSize_m);
+		stSweepSqStart_m.fY_m = getXPos() - (sonar.Range_m + stMap.cellSize_m);
+		stSweepSqStop_m.fX_m = getXPos() + (sonar.Range_m + stMap.cellSize_m);
+		stSweepSqStop_m.fY_m = getXPos() + (sonar.Range_m + stMap.cellSize_m);
+
+		// Sweep a square with size 2R_sonar + cellSize around the robot
+		stSweepSqStart_id = stMap.PositionToIndex(stSweepSqStart_m);
+		stSweepSqStop_id = stMap.PositionToIndex(stSweepSqStop_m);
+
+		// Region1
+		for (i = stSweepSqStart_id.iX; stSweepSqStop_id.iX; i++)
+		{
+			for (j = stSweepSqStart_id.iY; stSweepSqStop_id.iY; j++)
+			{
+				ij.iX = i;
+				ij.iY = j;
+				cellCenter = stMap.IndexToPosition(ij);
+				/* TODO FERNANDO: CONTINUE FROM HERE
+				[bInside, dist, ang] = isInsideSector(robot.x, ...
+					robot.y, ...
+					sonar.Value - sonar.ToleranceRegion1_m, ...
+					sonar.Value + sonar.ToleranceRegion1_m, ...
+					robot.phi + sonar.InstallAng_deg + sonar.beta_deg, ...
+					robot.phi + sonar.InstallAng_deg - sonar.beta_deg, ...
+					cellCenterX, ...
+					cellCenterY);
+
+				if bInside
+					region1Cells(k).iX = i;
+				region1Cells(k).iY = j;
+				region1Cells(k).r = dist;
+				region1Cells(k).alpha = robot.phi + sonar.InstallAng_deg - ang;
+				%region1Cells(k).alpha
+					k = k + 1;
+				%PlotCellById(i, j, Grid.cellSize);
+				end
+				*/
+			}
+		}
+  }

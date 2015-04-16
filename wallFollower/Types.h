@@ -19,11 +19,20 @@ struct Position
 	float fY_m;
 };
 
+struct Prob
+{
+	float Occupied;
+	float Empty;
+};
+
 struct Mapcell
 {
 	bool bWalkedOver;
 	bool bSonarViewed;
 	bool bLaserViewed;
+	// Added by Fernando
+	Prob prob;
+
 };
 
 struct Distance
@@ -37,6 +46,8 @@ struct Index
 	int iX;
 	int iY;
 };
+
+
 
 
 #endif

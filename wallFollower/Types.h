@@ -7,8 +7,8 @@
 
 struct Cone
 {
-	float fViewAngle_deg;
-	float fAzimuth_deg;
+	float fViewAngle_deg; // opening angle (full, 2*beta)
+	float fAzimuth_deg;  // with respect to robot heading
 	float fRange_m;
 
 };

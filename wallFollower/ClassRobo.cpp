@@ -187,48 +187,123 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
   {
 		Index stSweepSqStart_id, stSweepSqStop_id;
 		Position stSweepSqStart_m, stSweepSqStop_m;
-		Position GridOrigin;
-		Position cellCenter;
+		Position GridOrigin, robotPos, cellCenter;
 		int i, j;
 		Index ij;
+		bool bIsInsideRegion1, bIsInsideRegion2;
+		Cone SonarCone = sonar.GetCone();
+		
+		robotPos.fX_m = getXPos();
+		robotPos.fY_m = getYPos();
 
-		stSweepSqStart_m.fX_m = getXPos() - (sonar.Range_m + stMap.cellSize_m);
-		stSweepSqStart_m.fY_m = getXPos() - (sonar.Range_m + stMap.cellSize_m);
-		stSweepSqStop_m.fX_m = getXPos() + (sonar.Range_m + stMap.cellSize_m);
-		stSweepSqStop_m.fY_m = getXPos() + (sonar.Range_m + stMap.cellSize_m);
+		stSweepSqStart_m.fX_m = robotPos.fX_m - (SonarCone.fRange_m + (float)SIZE_CELL_M);
+		stSweepSqStart_m.fY_m = robotPos.fY_m - (SonarCone.fRange_m + (float)SIZE_CELL_M);
+		stSweepSqStop_m.fX_m = robotPos.fX_m + (SonarCone.fRange_m + (float)SIZE_CELL_M);
+		stSweepSqStop_m.fY_m = robotPos.fY_m + (SonarCone.fRange_m + (float)SIZE_CELL_M);
 
 		// Sweep a square with size 2R_sonar + cellSize around the robot
 		stSweepSqStart_id = stMap.PositionToIndex(stSweepSqStart_m);
 		stSweepSqStop_id = stMap.PositionToIndex(stSweepSqStop_m);
 
-		// Region1
 		for (i = stSweepSqStart_id.iX; stSweepSqStop_id.iX; i++)
 		{
 			for (j = stSweepSqStart_id.iY; stSweepSqStop_id.iY; j++)
 			{
+				float r = 0, alpha = 0;
+				float R, beta;
+
+				R = SonarCone.fRange_m;
+				beta = SonarCone.fViewAngle_deg / 2;
+				
 				ij.iX = i;
 				ij.iY = j;
 				cellCenter = stMap.IndexToPosition(ij);
-				/* TODO FERNANDO: CONTINUE FROM HERE
-				[bInside, dist, ang] = isInsideSector(robot.x, ...
-					robot.y, ...
-					sonar.Value - sonar.ToleranceRegion1_m, ...
-					sonar.Value + sonar.ToleranceRegion1_m, ...
-					robot.phi + sonar.InstallAng_deg + sonar.beta_deg, ...
-					robot.phi + sonar.InstallAng_deg - sonar.beta_deg, ...
-					cellCenterX, ...
-					cellCenterY);
 
-				if bInside
-					region1Cells(k).iX = i;
-				region1Cells(k).iY = j;
-				region1Cells(k).r = dist;
-				region1Cells(k).alpha = robot.phi + sonar.InstallAng_deg - ang;
-				%region1Cells(k).alpha
-					k = k + 1;
-				%PlotCellById(i, j, Grid.cellSize);
-				end
-				*/
+				// Check if the cell center point is inside the REGION 1 sector
+				bIsInsideRegion1 = stMap.isInsideSector(
+					robotPos,
+					sonar.GetMeasure() - sonar.ToleranceRegion1_m,
+					sonar.GetMeasure() + sonar.ToleranceRegion1_m,
+					getAngBase() + SonarCone.fAzimuth_deg + beta,
+					getAngBase() + SonarCone.fAzimuth_deg - beta,
+					cellCenter,
+					&r,
+					&alpha
+					);
+								
+				
+				if (bIsInsideRegion1)
+				{
+					/* This is a region 1 cell */
+					/* Update Bayes probability of the cell here */
+					float P_occup_region_1, P_empty_region_1;
+					
+					P_occup_region_1 = ((R - (r / 2)) / R + (beta - abs(alpha / 2)) / beta) / 2 * sonar.MaxOccupied; /* P(sn|H) */
+					P_empty_region_1 = 1 - P_occup_region_1;
+
+					stMap.Map[i][j].prob.Occupied = stMap.UpdateBayesFilter(	
+						P_occup_region_1, 
+						stMap.Map[i][j].prob.Occupied,
+						P_empty_region_1, 
+						stMap.Map[i][j].prob.Empty
+						);
+
+					// Limit to 0.98
+					if (stMap.Map[i][j].prob.Occupied > 0.98)
+					{
+						stMap.Map[i][j].prob.Occupied = 0.98;
+					}
+					else if (stMap.Map[i][j].prob.Occupied < 0.02)
+					{
+						stMap.Map[i][j].prob.Occupied = 0.02;
+					}
+
+					stMap.Map[i][j].prob.Empty = 1 - stMap.Map[i][j].prob.Occupied;
+				}
+				else
+				{
+					// Check if the cell center point is inside the REGION 2 sector
+					bIsInsideRegion2 = stMap.isInsideSector(
+						robotPos,
+						0,
+						sonar.GetMeasure() - sonar.ToleranceRegion1_m,
+						getAngBase() + SonarCone.fAzimuth_deg + beta,
+						getAngBase() + SonarCone.fAzimuth_deg - beta,
+						cellCenter,
+						&r,
+						&alpha
+						);
+
+					if (bIsInsideRegion2)
+					{
+						/* This is a region 2 cell */
+						/* Update Bayes probability of the cell here */
+						float P_occup_region_2, P_empty_region_2;
+
+						P_empty_region_2 = ((R - (r / 2)) / R + (beta - abs(alpha / 2)) / beta) / 2; /* P(sn|H) */
+						P_occup_region_2 = 1 - P_empty_region_2;
+
+						stMap.Map[i][j].prob.Occupied = stMap.UpdateBayesFilter(
+							P_occup_region_2,
+							stMap.Map[i][j].prob.Occupied,
+							P_empty_region_2,
+							stMap.Map[i][j].prob.Empty
+							);
+
+						// Limit to 0.98
+						if (stMap.Map[i][j].prob.Occupied > 0.98)
+						{
+							stMap.Map[i][j].prob.Occupied = 0.98;
+						}
+						else if (stMap.Map[i][j].prob.Occupied < 0.02)
+						{
+							stMap.Map[i][j].prob.Occupied = 0.02;
+						}
+
+						stMap.Map[i][j].prob.Empty = 1 - stMap.Map[i][j].prob.Occupied;
+					}
+				}
+					
 			}
 		}
   }

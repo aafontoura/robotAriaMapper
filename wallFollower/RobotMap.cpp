@@ -3,7 +3,7 @@
 
 CRobotMap::CRobotMap()
 {
-	cellSize_m = (float) SIZE_CELL_M;
+	
 }
 
 
@@ -97,11 +97,79 @@ Position CRobotMap::IndexToPosition(Index stIndex)
 	return Result;
 }
 
-bool isInsideSector(Position origin, float R1, float R2, float ang1_deg, float ang2_deg, Position testpoint)
+bool CRobotMap::isInsideSector(Position origin, float R1, float R2, float ang1_deg, float ang2_deg, Position testpoint, float *rDist_m, float *rAngle_deg)
 {
-	return false;
+	bool bIsInside;
+
+	
+	// Calculate the distance and angle from the origin
+	*rDist_m = sqrt(powf((origin.fX_m - testpoint.fX_m), 2) + powf((origin.fY_m - testpoint.fY_m), 2));
+	*rAngle_deg = atan2((testpoint.fY_m - origin.fY_m), (testpoint.fX_m - origin.fX_m)) * 180 / PI;
+
+	if ((ang1_deg > -180) && (ang1_deg <= 180))
+	{
+		//Correct angles to be[-180, 180]
+		if (ang2_deg > 180)
+		{
+			ang2_deg = ang2_deg - 360;
+		}
+		else if (ang1_deg <= -180)
+		{
+			// Correct angles to be[-360, 0]
+			if (ang2_deg > 0)
+				ang2_deg = ang2_deg - 360;
+			if (*rAngle_deg > 0)
+				*rAngle_deg = *rAngle_deg - 360;
+		}
+		else
+		{
+			// Correct angles to be[0, 360]
+			if (ang2_deg < 0)
+				ang2_deg = ang2_deg + 360;
+			if (*rAngle_deg < 0)
+				*rAngle_deg = *rAngle_deg + 360;
+		}
+
+	}
+
+	if ((*rDist_m >= R1) && (*rDist_m <= R2))
+	{
+		if ((ang1_deg >= *rAngle_deg) && (*rAngle_deg >= ang2_deg))
+			bIsInside = true;
+		else
+			bIsInside = false;
+	}
+	else
+	{
+		bIsInside = false;
+	}
+
+	return bIsInside;
 }
 
 
+float CRobotMap::UpdateBayesFilter(float P_sn_H, float P_H_sn_Minus1, float P_sn_notH, float P_notH_sn_Minus1)
+{
+	/*
+		UPDATEBAYESFILTER This function updates the bayes filter
+		INPUT ARGS :
+			P_sn_H is P(sn | H), the prob of having a reading given occup or empty
+			P_H_sn_Minus1 is P(H | sn - 1), the prob of being occup or empty given the reading
+			P_sn_notH is P(sn | not(H))
+			P_notH_sn_Minus1 is P(not(H) | sn - 1)
 
+		OUTPUT ARGS :
+			P_H_sn is P(H | sn), the prob of being occup / empty given all readings
+
+		H is the event(hypotesis) of sending the acoustic sonar wave.The
+		outcomes can be OCCUPIED or EMPTY
+		*/
+	
+	float P_H_sn;
+	P_H_sn = (P_sn_H * P_H_sn_Minus1) / 
+				((P_sn_H * P_H_sn_Minus1) + 
+					(P_sn_notH * P_notH_sn_Minus1));
+
+	return P_H_sn;
+}
 

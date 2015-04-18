@@ -13,8 +13,6 @@ private:
 	Distance stMeasure;
 
 
-
-
 public:
 	
 	CSonar();

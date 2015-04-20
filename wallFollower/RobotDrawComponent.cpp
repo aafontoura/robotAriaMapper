@@ -13,7 +13,7 @@ RobotDrawComponent::RobotDrawComponent(int x, int y)
 	orientationAngle = 00;
 
 	for (int i = 0; i < NUM_OF_CONES; i++)
-		cones[i] = new ConeDrawComponent(30, i * 180 / 7 - 15 - 75, 5, 0, 0);
+		cones[i] = new ConeDrawComponent(30, (7-i )* 180 / 7 - 15 - 75, 5, 0, 0);
 
 }
 

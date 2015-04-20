@@ -130,6 +130,7 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
 
 		  aSonares[i]->SetMeasure((int)(robot.getSonarRange(i)));
 		  stMap.SetCone(OwnPos, getAngBase(), aSonares[i]->GetCone(), aSonares[i]->GetMeasure()/1000);
+		  ProcessSonarReading(aSonares[i]);
 	  }
   }
 
@@ -183,7 +184,7 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
   { robot.setVel2(vl,vr);}
  
 
-  void PioneerRobot::ProcessSonarReading(CSonar sonar)
+  void PioneerRobot::ProcessSonarReading(CSonar* sonar)
   {
 		Index stSweepSqStart_id, stSweepSqStop_id;
 		Position stSweepSqStart_m, stSweepSqStop_m;
@@ -191,7 +192,7 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
 		int i, j;
 		Index ij;
 		bool bIsInsideRegion1, bIsInsideRegion2;
-		Cone SonarCone = sonar.GetCone();
+		Cone SonarCone = sonar->GetCone();
 		
 		robotPos.fX_m = getXPos();
 		robotPos.fY_m = getYPos();
@@ -205,9 +206,9 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
 		stSweepSqStart_id = stMap.PositionToIndex(stSweepSqStart_m);
 		stSweepSqStop_id = stMap.PositionToIndex(stSweepSqStop_m);
 
-		for (i = stSweepSqStart_id.iX; stSweepSqStop_id.iX; i++)
+		for (i = stSweepSqStart_id.iX; i < stSweepSqStop_id.iX; i++)
 		{
-			for (j = stSweepSqStart_id.iY; stSweepSqStop_id.iY; j++)
+			for (j = stSweepSqStart_id.iY; j < stSweepSqStop_id.iY; j++)
 			{
 				float r = 0, alpha = 0;
 				float R, beta;
@@ -222,8 +223,8 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
 				// Check if the cell center point is inside the REGION 1 sector
 				bIsInsideRegion1 = stMap.isInsideSector(
 					robotPos,
-					sonar.GetMeasure() - sonar.ToleranceRegion1_m,
-					sonar.GetMeasure() + sonar.ToleranceRegion1_m,
+					sonar->GetMeasure() - sonar->ToleranceRegion1_m,
+					sonar->GetMeasure() + sonar->ToleranceRegion1_m,
 					getAngBase() + SonarCone.fAzimuth_deg + beta,
 					getAngBase() + SonarCone.fAzimuth_deg - beta,
 					cellCenter,
@@ -238,7 +239,7 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
 					/* Update Bayes probability of the cell here */
 					float P_occup_region_1, P_empty_region_1;
 					
-					P_occup_region_1 = ((R - (r / 2)) / R + (beta - abs(alpha / 2)) / beta) / 2 * sonar.MaxOccupied; /* P(sn|H) */
+					P_occup_region_1 = ((R - (r / 2)) / R + (beta - abs(alpha / 2)) / beta) / 2 * sonar->MaxOccupied; /* P(sn|H) */
 					P_empty_region_1 = 1 - P_occup_region_1;
 
 					stMap.Map[i][j].prob.Occupied = stMap.UpdateBayesFilter(	
@@ -266,7 +267,7 @@ PioneerRobot::PioneerRobot(int tipoConexao,char* info,int *sucesso) {
 					bIsInsideRegion2 = stMap.isInsideSector(
 						robotPos,
 						0,
-						sonar.GetMeasure() - sonar.ToleranceRegion1_m,
+						sonar->GetMeasure() - sonar->ToleranceRegion1_m,
 						getAngBase() + SonarCone.fAzimuth_deg + beta,
 						getAngBase() + SonarCone.fAzimuth_deg - beta,
 						cellCenter,

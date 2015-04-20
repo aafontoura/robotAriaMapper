@@ -54,7 +54,7 @@ class PioneerRobot {
   void Move(double vl,double vr);
   void getLaser();
   // Added by fernando
-  void ProcessSonarReading(CSonar sonar);
+  void ProcessSonarReading(CSonar* sonar);
 };
 
 

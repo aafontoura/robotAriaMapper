@@ -4,7 +4,7 @@
 #define PI (float)3.14159
 #define MATRIX_X_SIZE	1000
 #define MATRIX_Y_SIZE	1000
-#define SIZE_CELL_M 0.05
+#define SIZE_CELL_M 0.1
 
 struct Cone
 {

@@ -3,7 +3,12 @@
 
 CRobotMap::CRobotMap()
 {
-	
+	for (int i = 0; i < MATRIX_X_SIZE; i++)
+		for (int j = 0; j < MATRIX_Y_SIZE; j++)
+		{
+			Map[i][j].prob.Empty = 0.5;
+			Map[i][j].prob.Occupied = 0.5;
+		}
 }
 
 
